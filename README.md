@@ -2,7 +2,7 @@
 Motorsport Manager Edits
 
 ## Random Setup for AI
-```
+```C#
 public void CreateAISetupForQualifyingAndRace()
 {
 	Mechanic mechanicOfDriver = this.mVehicle.driver.contract.GetTeam().GetMechanicOfDriver(this.mVehicle.driver);

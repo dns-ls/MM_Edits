@@ -2,6 +2,7 @@
 Motorsport Manager Edits
 
 ## Random Setup for AI
+In "SessionSetup.CreateAISetupForQualifyingAndRace()"
 ```C#
 public void CreateAISetupForQualifyingAndRace()
 {

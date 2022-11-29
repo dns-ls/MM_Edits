@@ -1,5 +1,5 @@
 # MM_Edits
-Motorsport Manager Edits
+Motorsport Manager Edits, all edits work in FF22
 
 ## Random Setup for AI
 In "SessionSetup.CreateAISetupForQualifyingAndRace()"

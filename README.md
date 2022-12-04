@@ -21,3 +21,44 @@ public void CreateAISetupForQualifyingAndRace()
 	this.SetAISetupWithinRange(randomWert + 0.01f * num, 1f);
 }
 ```
+
+## AI will not promote
+In "Championship.ProcessChampionshipPromotions(bool)"
+
+"bool flag" needs to be set to "false"
+```C#
+public void ProcessChampionshipPromotions(bool inPlayerAcceptPromotion = true)
+{
+	Championship nextTierChampionship = this.GetNextTierChampionship();
+	bool flag = false;
+	int num = 0;
+	if (nextTierChampionship != null && nextTierChampionship.championshipPromotions.lastPlace.IsPlayersTeam())
+	{
+		Game.instance.dialogSystem.OnPlayerTeamRelegatable(flag, this.championshipID);
+	}
+	if (nextTierChampionship != null && flag)
+	{
+		num++;
+		Team lastPlace = nextTierChampionship.championshipPromotions.lastPlace;
+		nextTierChampionship.championshipPromotions.lastPlaceStatus = ChampionshipPromotions.Status.Relegated;
+		nextTierChampionship.RemoveTeamEntry(lastPlace);
+		this.RemoveTeamEntry(this.mChampionshipPromotions.champion);
+		this.mChampionshipPromotions.championStatus = ChampionshipPromotions.Status.Promoted;
+		nextTierChampionship.SetPromotedTeam(this.mChampionshipPromotions.champion, this, this.mChampionshipPromotions.championPartRankings);
+		nextTierChampionship.AddTeamEntry(this.mChampionshipPromotions.champion);
+		this.SetRelegatedTeam(lastPlace, nextTierChampionship, nextTierChampionship.championshipPromotions.lastPlacePartRankings);
+		this.AddTeamEntry(lastPlace);
+		nextTierChampionship.standings.UpdateStandings();
+		this.standings.UpdateStandings();
+	}
+	else
+	{
+		this.mChampionshipPromotions.championStatus = ChampionshipPromotions.Status.RefusedPromotion;
+		if (nextTierChampionship != null)
+		{
+			nextTierChampionship.mChampionshipPromotions.championStatus = ChampionshipPromotions.Status.SavedFromRelegation;
+		}
+	}
+	this.completedPromotions = true;
+}
+```

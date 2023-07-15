@@ -62,3 +62,19 @@ public void ProcessChampionshipPromotions(bool inPlayerAcceptPromotion = true)
 	this.completedPromotions = true;
 }
 ```
+
+## No engine or gearbox wear
+In "Racingvehicle.OnSessionEnd
+```C#
+public void OnSessionEnd()
+	{
+		if (Game.instance.sessionManager.sessionType == SessionDetails.SessionType.Race)
+		{
+			for (int i = 0; i < this.mDriversForCar.Length; i++)
+			{
+				this.mDriversForCar[i].driverForm.RecordAverageForm(base.championship.GetCurrentEventDetails());
+				this.mDriversForCar[i].driverStamina.Reset();
+			}
+		}
+	}
+```
